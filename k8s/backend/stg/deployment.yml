@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment-stg
+  labels:
+    app: backend-stg
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-stg
+  template:
+    metadata:
+      labels:
+        app: backend-stg
+    spec:
+      containers:
+      - name: backend-stg
+        image: mtararujs/webapp-backend
+        ports:
+        - containerPort: 5050
+      

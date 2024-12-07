@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment-prd
+  labels:
+    app: frontend-prd
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: frontend-prd
+  template:
+    metadata:
+      labels:
+        app: frontend-prd
+    spec:
+      containers:
+      - name: frontend-prd
+        image: mtararujs/webapp-frontend
+        ports:
+        - containerPort: 80
+      

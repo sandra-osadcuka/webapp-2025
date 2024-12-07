@@ -1,0 +1,48 @@
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=mydatabase
+  backend:
+    build: ./backend
+    image: mtararujs/webapp-backend
+    container_name: backend
+    ports:
+      - 5050:5050
+    depends_on:
+      - postgres-db
+    deploy:
+      resources: 
+        limits:
+          memory: 16M
+          cpus: 0.5
+        reservations:
+          memory: 10M
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 10s
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile-multi-stage
+    image: mtararujs/webapp-frontend
+    container_name: frontend
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+
+
+
+# docker run --network=node-webapp -p 5432:5432 -v $PWD:/docker-entrypoint-initdb.d --name postgres-db -e POSTGRES_PASSWORD=mysecretpassword -e POSTGRES_DB=mydatabase -d postgres
+# docker run --network=node-webapp --rm -p 5050:5050 webapp-backend
+# docker run --network=node-webapp --rm -p 3000:3000 webapp-frontend
+# docker run --rm --name webapp-frontend -p 80:80 webapp-frontend-nginx
+# docker run --network=node-webapp --rm -p 5050:5050 mtararujs/webapp-backend
