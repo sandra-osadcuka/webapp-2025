@@ -1,0 +1,20 @@
+name: Webapp CI/CD pipeline
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-backend:
+  build-frontend:
+  deploy-backened-dev:
+  deploy-frontend-dev:
+  test-backend-dev:
+  deploy-backened-stg:
+  deploy-frontend-stg:
+  test-backend-stg:
+  deploy-backened-prd:
+  deploy-frontend-prd:
+  test-backend-prd:
