@@ -22,9 +22,9 @@ jobs:
       - name: Build Backend application
         if: steps.filter.outputs.backend = 'true'
         uses: ./.github/actions/build
-          with:
-            application: backend
-            docker_image_tag: mtararujs/webapp-backend
+        with:
+          application: backend
+          docker_image_tag: mtararujs/webapp-backend
   build-frontend:
     name: Build Frontend
     runs-on: self-hosted
@@ -40,9 +40,9 @@ jobs:
       - name: Build Frontend application
         if: steps.filter.outputs.frontend = 'true'
         uses: ./.github/actions/build
-          with:
-            application: frontend
-            docker_image_tag: mtararujs/webapp-frontend
+        with:
+          application: frontend
+          docker_image_tag: mtararujs/webapp-frontend
 
   deploy-backened-dev:
     name: Delploy Backend to Kubernetes DEV
