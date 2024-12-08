@@ -11,12 +11,22 @@ jobs:
     name: Build Backend
     runs-on: self-hosted
     steps:
-      - run: echo "Building Backend.."
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Build Backend Docker Image
+        run: docker build -t mtararujs/webapp-backend ./backend  
+      - name: Pushing Docker Image to Docker Hub
+        run: docker push mtararujs/webapp-backend  
   build-frontend:
     name: Build Frontend
     runs-on: self-hosted
     steps:
-      - run: echo "Building Frontend.."
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - name: Build Frontend Docker Image
+        run: docker build -t mtararujs/webapp-frontend ./frontend  
+      - name: Pushing Docker Image to Docker Hub
+        run: docker push mtararujs/webapp-frontend  
   deploy-backened-dev:
     name: Delploy Backend to Kubernetes DEV
     runs-on: self-hosted
