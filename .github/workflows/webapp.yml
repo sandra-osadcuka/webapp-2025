@@ -47,7 +47,7 @@ jobs:
   deploy-dev:
     name: Deploy Kubuernetes - DEV
     runs-on: self-hosted
-    needs: [build-backend, build-fronted]
+    needs: [build-backend, build-frontend]
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
