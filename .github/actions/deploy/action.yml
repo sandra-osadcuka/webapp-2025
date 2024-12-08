@@ -14,7 +14,7 @@ runs:
   using: "composite"
   steps:
     - name: Perform rolling deployment
-      run: kubectl set image ${{ inputs.deployment_name}} ${{ inputs.deployment_pod_name}}=${{ inputs.docker_image_tag }}
+      run: kubectl set image deployment ${{ inputs.deployment_name}} ${{ inputs.deployment_pod_name}}=${{ inputs.docker_image_tag }}
       shell: bash
     - name: Perform rollout restart
       run: kubectl rollout restart deployment ${{ inputs.deployment_name }}
