@@ -8,13 +8,57 @@ on:
 
 jobs:
   build-backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building Backend.."
   build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Building Frontend.."
   deploy-backened-dev:
+    name: Delploy Backend to Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying Backend.."
   deploy-frontend-dev:
+    name: Delploy Frontend to Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying Frontend.."
   test-backend-dev:
+    name: Run API Tests against DEV Backend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests.."
   deploy-backened-stg:
+    name: Delploy Backend to Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying Backend.."
   deploy-frontend-stg:
+    name: Delploy Frontend to Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying Frontend.."
   test-backend-stg:
+    name: Run API Tests against PRD Backend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests.."
   deploy-backened-prd:
+    name: Delploy Backend to Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying Backend.."
   deploy-frontend-prd:
+    name: Delploy Frontend to Kubernetes
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Deploying Frontend.."
   test-backend-prd:
+    name: Run API Tests against PRD Backend
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Running tests.."
