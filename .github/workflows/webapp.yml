@@ -20,7 +20,7 @@ jobs:
             backend:
               - 'backend/**'
       - name: Build Backend application
-        if: steps.filter.outputs.backend = 'true'
+        if: steps.filter.outputs.backend == 'true'
         uses: ./.github/actions/build
         with:
           application: backend
@@ -38,7 +38,7 @@ jobs:
             frontend:
               - 'frontend/**'
       - name: Build Frontend application
-        if: steps.filter.outputs.frontend = 'true'
+        if: steps.filter.outputs.frontend == 'true'
         uses: ./.github/actions/build
         with:
           application: frontend
