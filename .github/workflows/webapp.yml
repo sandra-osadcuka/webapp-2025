@@ -93,6 +93,104 @@ jobs:
         with:
           test_environment: DEV
 
+  deploy-stg:
+    name: Deploy Kubuernetes - STG
+    runs-on: self-hosted
+    needs: [test-dev]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+      - name: Deploy Frontend
+        if: steps.filter.outputs.frontend == 'true'
+        uses: ./.github/actions/deploy
+        with:
+          deployment_name: frontend-deployment-stg
+          deployment_pod_name: frontend-stg
+          docker_image_tag: mtararujs/webapp-frontend:$GITHUB_SHA
+      - name : Deploy Backend
+        if: steps.filter.outputs.backend == 'true'
+        uses: ./.github/actions/deploy
+        with:
+          deployment_name: backend-deployment-stg
+          deployment_pod_name: backend-stg
+          docker_image_tag: mtararujs/webapp-backend:$GITHUB_SHA
+
+  test-stg:
+    name: Run API Tests - STG
+    runs-on: self-hosted
+    needs: [deploy-stg]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+      - name: Run API Tests
+        if: steps.filter.outputs.backend == 'true'
+        uses: ./.github/actions/test
+        with:
+          test_environment: STG
+        
+  deploy-prd:
+    name: Deploy Kubuernetes - PRD
+    runs-on: self-hosted
+    needs: [test-stg]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+      - name: Deploy Frontend
+        if: steps.filter.outputs.frontend == 'true'
+        uses: ./.github/actions/deploy
+        with:
+          deployment_name: frontend-deployment-prd
+          deployment_pod_name: frontend-prd
+          docker_image_tag: mtararujs/webapp-frontend:$GITHUB_SHA
+      - name : Deploy Backend
+        if: steps.filter.outputs.backend == 'true'
+        uses: ./.github/actions/deploy
+        with:
+          deployment_name: backend-deployment-prd
+          deployment_pod_name: backend-prd
+          docker_image_tag: mtararujs/webapp-backend:$GITHUB_SHA
+
+  test-prd:
+    name: Run API Tests - PRD
+    runs-on: self-hosted
+    needs: [deploy-stg]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+      - name: Run API Tests
+        if: steps.filter.outputs.backend == 'true'
+        uses: ./.github/actions/test
+        with:
+          test_environment: PRD
+
 
 
 
