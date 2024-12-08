@@ -8,8 +8,8 @@ runs:
   using: "composite"
   steps:
     - name: Pull docker image for API tests
-      run: docker pull mtararaujs/api-test-runner
+      run: docker pull mtararujs/api-test-runner
       shell: bash
     - name: Run API tests
-      run: docker run --rm --network=host mtararaujs/api-test-runner cucumber PLATFORM=${{ inputs.test_environment}}
+      run: docker run --rm --network=host mtararujs/api-test-runner cucumber PLATFORM=${{ inputs.test_environment}}
       shell: bash
