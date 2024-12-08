@@ -175,7 +175,7 @@ jobs:
   test-prd:
     name: Run API Tests - PRD
     runs-on: self-hosted
-    needs: [deploy-stg]
+    needs: [deploy-prd]
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
