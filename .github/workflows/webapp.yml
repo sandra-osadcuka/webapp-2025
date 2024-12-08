@@ -13,20 +13,19 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Build Backend Docker Image
-        run: docker build -t mtararujs/webapp-backend ./backend  
-      - name: Pushing Docker Image to Docker Hub
-        run: docker push mtararujs/webapp-backend  
+      - uses: ./.github/actions/build
+        application: backend
+        docker_image_tag: mtararujs/webapp-backend
   build-frontend:
     name: Build Frontend
     runs-on: self-hosted
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
-      - name: Build Frontend Docker Image
-        run: docker build -t mtararujs/webapp-frontend ./frontend  
-      - name: Pushing Docker Image to Docker Hub
-        run: docker push mtararujs/webapp-frontend  
+      - uses: ./.github/actions/build
+        application: backend
+        docker_image_tag: mtararujs/webapp-backend
+
   deploy-backened-dev:
     name: Delploy Backend to Kubernetes DEV
     runs-on: self-hosted
@@ -45,6 +44,7 @@ jobs:
     needs: [deploy-backened-dev]
     steps:
       - run: echo "Running tests.."
+
   deploy-backened-stg:
     name: Delploy Backend to Kubernetes STG
     runs-on: self-hosted
@@ -63,6 +63,7 @@ jobs:
     needs: [deploy-backened-stg]
     steps:
       - run: echo "Running tests.."
+
   deploy-backened-prd:
     name: Delploy Backend to Kubernetes PRD
     runs-on: self-hosted
