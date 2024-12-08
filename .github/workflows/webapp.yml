@@ -44,59 +44,82 @@ jobs:
           application: frontend
           docker_image_tag: mtararujs/webapp-frontend
 
-  deploy-backened-dev:
-    name: Delploy Backend to Kubernetes DEV
+  deploy-dev:
+    name: Deploy Kubuernetes - DEV
     runs-on: self-hosted
-    needs: [build-backend]
+    needs: [build-backend, build-fronted]
     steps:
-      - run: echo "Deploying Backend.."
-  deploy-frontend-dev:
-    name: Delploy Frontend to Kubernetes DEV
-    runs-on: self-hosted
-    needs: [build-frontend]
-    steps:
-      - run: echo "Deploying Frontend.."
-  test-backend-dev:
-    name: Run API Tests against DEV Backend
-    runs-on: self-hosted
-    needs: [deploy-backened-dev]
-    steps:
-      - run: echo "Running tests.."
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'frontend/**'
+            backend:
+              - 'backend/**'
+      - name: Deploy Frontend
+        if: steps.filter.outputs.frontend == 'true'
+        run: echo "Deploying frontend"
+      - name : Deploy Backend
+        if: steps.filter.outputs.backend == 'true'
+        run: echo "Deploying backend"
 
-  deploy-backened-stg:
-    name: Delploy Backend to Kubernetes STG
-    runs-on: self-hosted
-    needs: [test-backend-dev]
-    steps:
-      - run: echo "Deploying Backend.."
-  deploy-frontend-stg:
-    name: Delploy Frontend to Kubernetes STG
-    runs-on: self-hosted
-    needs: [deploy-frontend-dev]
-    steps:
-      - run: echo "Deploying Frontend.."
-  test-backend-stg:
-    name: Run API Tests against PRD Backend
-    runs-on: self-hosted
-    needs: [deploy-backened-stg]
-    steps:
-      - run: echo "Running tests.."
 
-  deploy-backened-prd:
-    name: Delploy Backend to Kubernetes PRD
-    runs-on: self-hosted
-    needs: [test-backend-stg]
-    steps:
-      - run: echo "Deploying Backend.."
-  deploy-frontend-prd:
-    name: Delploy Frontend to Kubernetes PRD
-    runs-on: self-hosted
-    needs: [deploy-frontend-stg]
-    steps:
-      - run: echo "Deploying Frontend.."
-  test-backend-prd:
-    name: Run API Tests against PRD Backend
-    runs-on: self-hosted
-    needs: [deploy-backened-prd]
-    steps:
-      - run: echo "Running tests.."
+  # deploy-backened-dev:
+  #   name: Delploy Backend to Kubernetes DEV
+  #   runs-on: self-hosted
+  #   needs: [build-backend]
+  #   steps:
+  #     - run: echo "Deploying Backend.."
+  # deploy-frontend-dev:
+  #   name: Delploy Frontend to Kubernetes DEV
+  #   runs-on: self-hosted
+  #   needs: [build-frontend]
+  #   steps:
+  #     - run: echo "Deploying Frontend.."
+  # test-backend-dev:
+  #   name: Run API Tests against DEV Backend
+  #   runs-on: self-hosted
+  #   needs: [deploy-backened-dev]
+  #   steps:
+  #     - run: echo "Running tests.."
+
+  # deploy-backened-stg:
+  #   name: Delploy Backend to Kubernetes STG
+  #   runs-on: self-hosted
+  #   needs: [test-backend-dev]
+  #   steps:
+  #     - run: echo "Deploying Backend.."
+  # deploy-frontend-stg:
+  #   name: Delploy Frontend to Kubernetes STG
+  #   runs-on: self-hosted
+  #   needs: [deploy-frontend-dev]
+  #   steps:
+  #     - run: echo "Deploying Frontend.."
+  # test-backend-stg:
+  #   name: Run API Tests against PRD Backend
+  #   runs-on: self-hosted
+  #   needs: [deploy-backened-stg]
+  #   steps:
+  #     - run: echo "Running tests.."
+
+  # deploy-backened-prd:
+  #   name: Delploy Backend to Kubernetes PRD
+  #   runs-on: self-hosted
+  #   needs: [test-backend-stg]
+  #   steps:
+  #     - run: echo "Deploying Backend.."
+  # deploy-frontend-prd:
+  #   name: Delploy Frontend to Kubernetes PRD
+  #   runs-on: self-hosted
+  #   needs: [deploy-frontend-stg]
+  #   steps:
+  #     - run: echo "Deploying Frontend.."
+  # test-backend-prd:
+  #   name: Run API Tests against PRD Backend
+  #   runs-on: self-hosted
+  #   needs: [deploy-backened-prd]
+  #   steps:
+  #     - run: echo "Running tests.."
