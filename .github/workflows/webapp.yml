@@ -74,6 +74,30 @@ jobs:
           deployment_pod_name: backend-dev
           docker_image_tag: mtararujs/webapp-backend:$GITHUB_SHA
 
+  test-dev:
+    name: Run API Tests - DEV
+    runs-on: self-hosted
+    needs: [deploy-dev]
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+      - name: Run API Tests
+        if: steps.filter.outputs.backend == 'true'
+        uses: ./.github/actions/test
+        with:
+          test_environment: DEV
+
+
+
+
+
+
 
   # deploy-backened-dev:
   #   name: Delploy Backend to Kubernetes DEV
