@@ -65,14 +65,14 @@ jobs:
         with:
           deployment_name: frontend-deployment-dev
           deployment_pod_name: frontend-dev
-          docker_image_name: mtararujs/webapp-frontend:$GITHUB_SHA
+          docker_image_tag: mtararujs/webapp-frontend:$GITHUB_SHA
       - name : Deploy Backend
         if: steps.filter.outputs.backend == 'true'
         uses: ./.github/actions/deploy
         with:
           deployment_name: backend-deployment-dev
           deployment_pod_name: backend-dev
-          docker_image_name: mtararujs/webapp-backend:$GITHUB_SHA
+          docker_image_tag: mtararujs/webapp-backend:$GITHUB_SHA
 
 
   # deploy-backened-dev:

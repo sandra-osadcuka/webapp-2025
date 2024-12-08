@@ -9,7 +9,6 @@ COPY .env ./
 
 EXPOSE 5050
 
-
 CMD [ "start" ]
 ENTRYPOINT [ "npm" ]
 
