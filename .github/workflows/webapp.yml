@@ -61,10 +61,18 @@ jobs:
               - 'backend/**'
       - name: Deploy Frontend
         if: steps.filter.outputs.frontend == 'true'
-        run: echo "Deploying frontend"
+        uses: ./.github/actions/deploy
+        with:
+          deployment_name: frontend-deployment-dev
+          deployment_pod_name: frontend-dev
+          docker_image_name: mtararujs/webapp-frontend
       - name : Deploy Backend
         if: steps.filter.outputs.backend == 'true'
-        run: echo "Deploying backend"
+        uses: ./.github/actions/deploy
+        with:
+          deployment_name: backend-deployment-dev
+          deployment_pod_name: backend-dev
+          docker_image_name: mtararujs/webapp-backend
 
 
   # deploy-backened-dev:
