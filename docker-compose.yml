@@ -1,0 +1,36 @@
+services:
+  postgres-db:
+    image: postgres:18-alpine
+    container_name: postgres-db
+    volumes:
+      - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=mydatabase
+  backend:
+    build: ./backend
+    image: mtararujs/webapp-backend:latest
+    container_name: backend
+    ports:
+      - 5050:5050
+    deploy:
+      resources:
+        limits:
+          memory: 30M
+          cpus: 0.5
+        reservations:
+          memory: 15M
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 10s
+  frontend:
+    build: ./frontend
+    image: mtararujs/webapp-frontend:latest
+    container_name: frontend
+    ports:
+      - 3000:80
+
+
