@@ -13,18 +13,20 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v5
-        uses: ./.github/actions/build
-        application: backend
-        docker_image_tag: sandraosadcuka/webapp-backend
+      - uses: ./.github/actions/build
+        with:
+          application: backend
+          docker_image_tag: sandraosadcuka/webapp-backend
   build-frontend:
     name: Build frontend
     runs-on: self-hosted
     steps:
       - name: Checkout the code
         uses: actions/checkout@v5
-        uses: ./.github/actions/build
-        application: frontend
-        docker_image_tag: sandraosadcuka/webapp-frontend
+      - uses: ./.github/actions/build
+        with:
+          application: frontend
+          docker_image_tag: sandraosadcuka/webapp-frontend
 
   deploy-backend-dev:
     name: Deploy Backend to Kubernetes DEV
