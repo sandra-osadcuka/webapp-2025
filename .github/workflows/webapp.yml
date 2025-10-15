@@ -9,65 +9,65 @@ on:
 jobs:
   build-backend:
     name: Build Backend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - run: echo "Building Backend..."
   build-frontend:
     name: Build frontend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - run: echo "Building Frontend..."
   deploy-backend-dev:
     name: Deploy Backend to Kubernetes DEV
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [build-backend]
     steps:
       - run: echo "Deploying Backend to Kubernetes..."
   deploy-frontend-dev:
     name: Deploy Frontend to Kubernetes DEV
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [build-frontend]
     steps:
       - run: echo "Deploying Frontend to Kubernetes..."
   test-backend-dev:
     name: Run API tests againsts DEV Backend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [deploy-backend-dev]
     steps:
       - run: echo "Running tests against DEV Backend..."
   deploy-backend-stg:
     name: Deploy Backend to Kubernetes STG
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [test-backend-dev]
     steps:
       - run: echo "Deploying Backend to Kubernetes..."
   deploy-frontend-stg:
     name: Deploy Frontend to Kubernetes STG
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [deploy-frontend-dev]
     steps:
       - run: echo "Deploying Frontend to Kubernetes..."
   test-backend-stg:
     name: Run API tests againsts STG Backend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [deploy-backend-stg]
     steps:
       - run: echo "Running tests against STG Backend..."
   deploy-backend-prd:
     name: Deploy Backend to Kubernetes PRD
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [test-backend-stg]
     steps:
       - run: echo "Deploying Backend to Kubernetes..."
   deploy-frontend-prd:
     name: Deploy Frontend to Kubernetes PRD
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [deploy-frontend-stg]
     steps:
       - run: echo "Deploying Frontend to Kubernetes..."
   test-backend-prd:
     name: Run API tests againsts PRD Backend
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [deploy-backend-prd]
     steps:
       - run: echo "Running tests against PRD Backend..."
