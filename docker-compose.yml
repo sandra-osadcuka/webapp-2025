@@ -7,11 +7,11 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=mydatabase
   backend:
     build: ./backend
-    image: mtararujs/webapp-backend:latest
+    image: sandraosadcuka/webapp-backend:latest
     container_name: backend
     ports:
       - 5050:5050
@@ -28,7 +28,7 @@ services:
         window: 10s
   frontend:
     build: ./frontend
-    image: mtararujs/webapp-frontend:latest
+    image: sandraosadcuka/webapp-frontend:latest
     container_name: frontend
     ports:
       - 3000:80

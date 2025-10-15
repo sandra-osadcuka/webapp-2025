@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: backend-stg
-        image: mtararujs/webapp-backend:latest
+        image: sandraosadcuka/webapp-backend:latest
         ports:
         - containerPort: 5050
