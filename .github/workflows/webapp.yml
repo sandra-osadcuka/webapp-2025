@@ -21,7 +21,6 @@ jobs:
     name: Build frontend
     runs-on: self-hosted
     steps:
-      steps:
       - name: Checkout the code
         uses: actions/checkout@v5
       - name: Building Frontend Docker Image
